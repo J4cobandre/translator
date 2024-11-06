@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import TextArea from "@/components/Inputs/TextArea"
 import React, {useState, ChangeEvent} from "react"
 import {
