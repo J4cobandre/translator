@@ -14,8 +14,8 @@
     "next": "15.0.2",
     "openai": "^4.71.0",
     "preline": "^2.5.1",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-speech-recognition": "^3.10.0"
   },
   "devDependencies": {
