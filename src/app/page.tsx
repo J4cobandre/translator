@@ -1,5 +1,5 @@
 "use client";
-
+import "regenerator-runtime/runtime";
 import TextArea from "@/components/Inputs/TextArea"
 import React, {useState, ChangeEvent} from "react"
 import {
