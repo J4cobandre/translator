@@ -27,15 +27,14 @@ const SpeechRecognitionComponent = ({ setSourceText }) => {
 
     if (listening) {
       SpeechRecognition.stopListening();
-
-      // Delay resetting the source text
-      setTimeout(() => {
-        setSourceText(""); // Clear the source text
-        setPreviousTranscript(""); // Reset previous transcript
-        resetTranscript(); // Reset the transcript
-        console.log("Source Text Cleared after delay");
-      }, 3000); // Adjust the delay time (in milliseconds) as needed
+      console.log("Stopped listening");
     } else {
+      // Clear the source text and transcript before starting a new session
+      setSourceText(""); // Clear the source text
+      setPreviousTranscript(""); // Reset previous transcript
+      resetTranscript(); // Reset the transcript
+      console.log("Source Text Cleared on Start Listening");
+
       SpeechRecognition.startListening({ continuous: true });
     }
   };
