@@ -5,8 +5,8 @@ import { IconMicrophone } from "@tabler/icons-react";
 const SpeechRecognitionComponent = ({ setSourceText }) => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [previousTranscript, setPreviousTranscript] = useState("");
-  const [error, setError] = useState("");
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [error, setError] = useState("");  // Corrected this line
+  const [setAudioPlaying] = useState(false);
 
   // Only update the sourceText when the transcript has changed
   useEffect(() => {

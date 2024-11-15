@@ -39,7 +39,7 @@ export default function Home() {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("English");
 
   const targetText = useTranslate(sourceText, selectedLanguage);
-  const { handleSourceAudioPlayback, handleTargetAudioPlayback, isPlaying, error } = useTTS();
+  const { handleSourceAudioPlayback, handleTargetAudioPlayback} = useTTS();
 
    
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
