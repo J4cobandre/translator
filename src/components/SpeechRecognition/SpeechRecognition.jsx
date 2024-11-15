@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-import { IconMicrophone, IconPlayerStopFilled} from "@tabler/icons-react";
+import { IconMicrophone, IconPlayerStopFilled } from "@tabler/icons-react";
 
 const SpeechRecognitionComponent = ({ setSourceText }) => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
@@ -27,10 +27,14 @@ const SpeechRecognitionComponent = ({ setSourceText }) => {
 
     if (listening) {
       SpeechRecognition.stopListening();
-      setSourceText(""); // Clear the source text when stopping
-      setPreviousTranscript(""); // Reset previous transcript when stopping
-      resetTranscript(); // Reset the transcript
-      console.log("Source Text Cleared");
+
+      // Delay resetting the source text
+      setTimeout(() => {
+        setSourceText(""); // Clear the source text
+        setPreviousTranscript(""); // Reset previous transcript
+        resetTranscript(); // Reset the transcript
+        console.log("Source Text Cleared after delay");
+      }, 1000); // Adjust the delay time (in milliseconds) as needed
     } else {
       SpeechRecognition.startListening({ continuous: true });
     }
