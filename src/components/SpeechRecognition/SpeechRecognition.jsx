@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-import { IconMicrophone, IconStop } from "@tabler/icons-react";
+import { IconMicrophone, IconPlayerStopFilled} from "@tabler/icons-react";
 
 const SpeechRecognitionComponent = ({ setSourceText }) => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
@@ -39,7 +39,7 @@ const SpeechRecognitionComponent = ({ setSourceText }) => {
   return (
     <div>
       {audioPlaying ? (
-        <IconStop size={22} color="#1d4378" className="text-gray-400" />
+        <IconPlayerStopFilled size={22} color="#1d4378" className="text-gray-400" />
       ) : (
         <IconMicrophone
           size={22}
