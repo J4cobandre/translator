@@ -34,7 +34,7 @@ const SpeechRecognitionComponent = ({ setSourceText }) => {
         setPreviousTranscript(""); // Reset previous transcript
         resetTranscript(); // Reset the transcript
         console.log("Source Text Cleared after delay");
-      }, 1000); // Adjust the delay time (in milliseconds) as needed
+      }, 3000); // Adjust the delay time (in milliseconds) as needed
     } else {
       SpeechRecognition.startListening({ continuous: true });
     }
