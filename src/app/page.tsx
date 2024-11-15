@@ -15,6 +15,8 @@ import LinkPaste from "@/components/Inputs/LinkPaste";
 import LanguageSelector from "@/components/Inputs/LanguageSelector";
 import useTranslate from "@/hooks/useTranslate";
 import SpeechRecognitionComponent from "@/components/SpeechRecognition/SpeechRecognition"
+import useTTS from '@/hooks//useTTS';
+
 
 import CategoryLinks from "@/components/categoryLinks";
 
@@ -24,25 +26,22 @@ export default function Home() {
   const [copied, setCopied] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<boolean>(false);
   const [languages] = useState<string[]>([
-    "English",
-    "Spanish",
-    "French",
-    "Filipino",
-    "German",
-    "Chinese",
-    "Japanese",
-    "Jamaican",
-    "Russian",
+    "Afrikaans", "Arabic", "Armenian", "Azerbaijani", "Belarusian", "Bosnian", 
+    "Bulgarian", "Catalan", "Chinese", "Croatian", "Czech", "Danish", "Dutch", 
+    "English", "Estonian", "Finnish", "French", "Galician", "German", "Greek", 
+    "Hebrew", "Hindi", "Hungarian", "Icelandic", "Indonesian", "Italian", 
+    "Japanese", "Kannada", "Kazakh", "Korean", "Latvian", "Lithuanian", 
+    "Macedonian", "Malay", "Marathi", "Maori", "Nepali", "Norwegian", "Persian", 
+    "Polish", "Portuguese", "Romanian", "Russian", "Serbian", "Slovak", 
+    "Slovenian", "Spanish", "Swahili", "Swedish", "Tagalog", "Tamil", "Thai", 
+    "Turkish", "Ukrainian", "Urdu", "Vietnamese", "Welsh"
   ]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>("English");
 
   const targetText = useTranslate(sourceText, selectedLanguage);
-  
-  const handleAudioPlayback = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
+  const { handleSourceAudioPlayback, handleTargetAudioPlayback, isPlaying, error } = useTTS();
 
+   
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -96,9 +95,10 @@ export default function Home() {
 
       <div className="relative overflow-hidden h-screen">
         <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24">
-          <div className="text-center">
-            <h1 className="text-4xl  sm:text-6xl font-bold  text-[#1d4378]">
-              nao<span className="text-[#1d4378]">medical</span>
+          <div className="text-center font-custom">
+            <h1 className="text-4xl sm:text-6xl text-[#1d4378] font-custom">
+            <span className="font-bold">nao</span>
+            <span className="text-[#1d4378]">medical</span>
             </h1>
 
             <p className="mt-0 text-[#1d4378]">
@@ -114,7 +114,7 @@ export default function Home() {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                       setSourceText(e.target.value)
                     }
-                    placeholder="..."
+                    placeholder="Enter text or press the record button to start translating"
                   />
                   <div className="flex flex-row justify-between w-full">
                     <span className="cursor-pointer flex space-x-2 flex-row">
@@ -124,7 +124,7 @@ export default function Home() {
                       <IconVolume
                         size={22}
                         color="#1d4378"
-                        onClick={() => handleAudioPlayback(sourceText)}
+                        onClick={() => handleSourceAudioPlayback(sourceText)}
                       />
                       <FileUpload handleFileUpload={handleFileUpload} />
                       <LinkPaste handleLinkPaste={handleLinkPaste} />
@@ -140,7 +140,7 @@ export default function Home() {
                     id="target-language"
                     value={targetText}
                     onChange={() => {}}
-                    placeholder="..."
+                    placeholder="Translation"
                   />
                   <div className="flex flex-row justify-between w-full">
                     <span className="cursor-pointer flex items-center space-x-2 flex-row">
@@ -152,7 +152,7 @@ export default function Home() {
                       <IconVolume
                         size={22}
                         color="#1d4378"
-                        onClick={() => handleAudioPlayback(targetText)}
+                        onClick={() => handleTargetAudioPlayback(targetText)}
                       />
                     </span>
                     <div className="flex flex-row items-center space-x-2 pr-4 cursor-pointer">
@@ -181,3 +181,4 @@ export default function Home() {
     </div>
   );
 };
+

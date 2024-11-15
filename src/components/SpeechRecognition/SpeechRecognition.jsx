@@ -1,19 +1,45 @@
-import React, { useEffect } from "react";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import React, { useEffect, useState } from "react";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { IconMicrophone } from "@tabler/icons-react";
 
 const SpeechRecognitionComponent = ({ setSourceText }) => {
-  const { transcript, listening } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const [previousTranscript, setPreviousTranscript] = useState("");
+  const [error, setError] = useState("");
+  const [audioPlaying, setAudioPlaying] = useState(false);
+
+  // Only update the sourceText when the transcript has changed
+  useEffect(() => {
+    if (transcript && transcript !== previousTranscript) {
+      setSourceText(transcript);
+      setPreviousTranscript(transcript);
+      console.log("Source Text Updated:", transcript);
+    } else if (transcript === previousTranscript) {
+      console.log("No change in transcript:", transcript);
+    }
+  }, [transcript, previousTranscript, setSourceText]);
 
   useEffect(() => {
-    setSourceText(transcript);
-  }, [transcript, setSourceText]);
+    if (transcript === "") {
+      setError("Transcript is not clearing correctly.");
+    } else {
+      setError(""); // Clear the error if transcript is updated
+    }
+  }, [transcript]);
 
   const handleVoiceRecording = () => {
+    // Play the audio when the microphone is clicked
+    const audio = new Audio("https://ssl.gstatic.com/dictionary/static/pronunciation/20191105/rec.m4a");
+    audio.play();
+    setAudioPlaying(true);
+    audio.onended = () => setAudioPlaying(false); // Reset state when audio finishes
+
     if (listening) {
       SpeechRecognition.stopListening();
+      setSourceText(""); // Clear the source text when stopping
+      setPreviousTranscript(""); // Reset previous transcript when stopping
+      resetTranscript(); // Reset the transcript
+      console.log("Source Text Cleared");
     } else {
       SpeechRecognition.startListening({ continuous: true });
     }
@@ -23,7 +49,7 @@ const SpeechRecognitionComponent = ({ setSourceText }) => {
     <div>
       <IconMicrophone
         size={22}
-        color = "#1d4378"
+        color="#1d4378"
         className="text-gray-400"
         onClick={handleVoiceRecording}
       />
